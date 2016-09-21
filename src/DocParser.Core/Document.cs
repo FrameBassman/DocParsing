@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Text.RegularExpressions;
+using DocParser.Core.Service;
 
 namespace DocParser.Core
 {
@@ -37,19 +39,6 @@ namespace DocParser.Core
             Timeliness = new TimeSpan(hours, minutes, 0);
 
             Name = fileInfo.Name;
-        }
-
-        private bool IsValidFileName(string fileName)
-        {
-            var pattern = @"\d{5}.\d{2}.\d{2}.\d{4}.\d{2}.\d{2}.\d{4}.\d.\d.\d.\w{2}.\w{4}.\d{8}";
-            var regex = new Regex(pattern, RegexOptions.IgnoreCase);
-            var matches = regex.Matches(fileName);
-
-            if (matches.Count > 0 && matches[0].Groups.Count > 0)
-            {
-                return fileName.Length - matches[0].Groups[0].Length == 4;
-            }
-            return false;
         }
     }
 }

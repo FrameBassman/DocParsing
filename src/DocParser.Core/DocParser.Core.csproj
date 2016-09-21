@@ -34,6 +34,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="HtmlAgilityPack, Version=1.4.9.5, Culture=neutral, PublicKeyToken=bd319b19eaf3b43a, processorArchitecture=MSIL">
+      <HintPath>..\packages\HtmlAgilityPack.1.4.9.5\lib\Net45\HtmlAgilityPack.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Core" />
@@ -47,14 +51,22 @@
   <ItemGroup>
     <Compile Include="Document.cs" />
     <Compile Include="DocumentProcessor.cs" />
+    <Compile Include="Elements\X.cs" />
+    <Compile Include="Elements\Y.cs" />
+    <Compile Include="Service\BaseElement.cs" />
+    <Compile Include="Elements\Reftime.cs" />
+    <Compile Include="Elements\RotatedLatLonProjection.cs" />
+    <Compile Include="Service\CustomPair.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config">
-      <SubType>Designer</SubType>
+    <None Include="..\DocParser.Decoder\App.config">
+      <Link>App.config</Link>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
