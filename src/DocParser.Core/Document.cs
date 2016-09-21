@@ -7,6 +7,10 @@ using DocParser.Core.Service;
 
 namespace DocParser.Core
 {
+    using DocParser.Core.Elements;
+
+    using HtmlAgilityPack;
+
     public class Document
     {
         private DateTime From;
@@ -16,6 +20,10 @@ namespace DocParser.Core
         public string Path;
 
         private TimeSpan Timeliness;
+
+        private Variables variables;
+
+        private Dimensions dimensions;
 
         public Document(FileInfo fileInfo)
         {
@@ -39,6 +47,14 @@ namespace DocParser.Core
             Timeliness = new TimeSpan(hours, minutes, 0);
 
             Name = fileInfo.Name;
+
+            HtmlDocument document = new HtmlDocument();
+            document.Load(fileInfo.FullName);
+
+            this.dimensions = new Dimensions("/html/body/ul/text()");
+            this.dimensions.LoadFromDocument(document);
+            this.variables = new Variables("/html/body/ul/ul/text()");
+            this.variables.LoadFromDocument(document);
         }
     }
 }
