@@ -10,19 +10,22 @@ namespace DocParser.Core.Elements
 {
     class Y : BaseElement
     {
-        public BaseElement StandardName = new BaseElement("/html/body/ul/ul/li[7]");
-        public BaseElement Units = new BaseElement("/html/body/ul/ul/li[8]");
+        private BaseElement StandardName;
+
+        private BaseElement Units;
 
         public Y(string xpath) : base(xpath)
         {
+            this.StandardName = new BaseElement("/html/body/ul/ul/li[7]");
+            this.Units = new BaseElement("/html/body/ul/ul/li[8]");
         }
 
         public override void LoadFromDocument(HtmlDocument htmlDocument)
         {
             base.LoadFromDocument(htmlDocument);
 
-            StandardName.LoadFromDocument(htmlDocument);
-            Units.LoadFromDocument(htmlDocument);
+            this.StandardName.LoadFromDocument(htmlDocument);
+            this.Units.LoadFromDocument(htmlDocument);
         }
     }
 }

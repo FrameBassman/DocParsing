@@ -10,17 +10,18 @@ namespace DocParser.Core.Elements
 {
     class ReftimeIso : BaseElement
     {
-        public BaseElement Units = new BaseElement("/html/body/ul/ul/li[8]");
+        private BaseElement Units;
 
         public ReftimeIso(string xpath) : base(xpath)
         {
+            this.Units = new BaseElement("/html/body/ul/ul/li[8]");
         }
 
         public override void LoadFromDocument(HtmlDocument htmlDocument)
         {
             base.LoadFromDocument(htmlDocument);
 
-            Units.LoadFromDocument(htmlDocument);
+            this.Units.LoadFromDocument(htmlDocument);
         }
     }
 }
