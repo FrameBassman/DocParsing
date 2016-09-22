@@ -51,6 +51,15 @@
   <ItemGroup>
     <Compile Include="Document.cs" />
     <Compile Include="DocumentProcessor.cs" />
+    <Compile Include="Elements\AltitudeAboveMsl.cs" />
+    <Compile Include="Elements\Dimensions.cs" />
+    <Compile Include="Elements\HeightAboveGround.cs" />
+    <Compile Include="Elements\PressureAltitudeAboveMsl.cs" />
+    <Compile Include="Elements\ReftimeIso.cs" />
+    <Compile Include="Elements\Time.cs" />
+    <Compile Include="Elements\UComponentOfWindHeightAboveGround.cs" />
+    <Compile Include="Elements\Variables.cs" />
+    <Compile Include="Elements\VComponentOfWindHeightAboveGround.cs" />
     <Compile Include="Elements\X.cs" />
     <Compile Include="Elements\Y.cs" />
     <Compile Include="Service\BaseElement.cs" />

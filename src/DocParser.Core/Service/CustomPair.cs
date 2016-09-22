@@ -10,20 +10,18 @@ namespace DocParser.Core.Service
 
         public CustomPair(string s)
         {
-            string s1 = s.Replace('"', '\'');
-            Regex keyRegex = new Regex(@"(?<=\:)(.*?)(?=\s)");
-            Regex valueRegex = new Regex(@"(?<=\')(.*?)(?=\')");
+            string preparedString = s.Replace(":", "").Replace("\"", "").Replace(" ", "").Replace(";", "");
+            string[] stringArray = preparedString.Split('=');
 
-            Match keyMatch = keyRegex.Match(s1);
-            Match valueMatch = valueRegex.Match(s1);
-
-            if (keyMatch.Success)
+            int c = stringArray.Length;
+            
+            if (c > 0 && !string.IsNullOrEmpty(stringArray[0]))
             {
-                this.Key = keyMatch.Value.Trim(':');
+                this.Key = stringArray[0];
             }
-            if (valueMatch.Success)
+            if (c > 1 && !string.IsNullOrEmpty(stringArray[1]))
             {
-                this.Value = valueMatch.Value;
+                this.Value = stringArray[1];
             }
         }
     }

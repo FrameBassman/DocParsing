@@ -27,6 +27,10 @@ namespace DocParser.Core
 
         public Document(FileInfo fileInfo)
         {
+            HtmlDocument document = new HtmlDocument();
+            document.Load(fileInfo.FullName);
+            this.LoadFromDocument(document);
+
             Path = fileInfo.FullName;
             string[] strings;
             string[] timeStrings;
@@ -47,14 +51,14 @@ namespace DocParser.Core
             Timeliness = new TimeSpan(hours, minutes, 0);
 
             Name = fileInfo.Name;
+        }
 
-            HtmlDocument document = new HtmlDocument();
-            document.Load(fileInfo.FullName);
-
+        private void LoadFromDocument(HtmlDocument doc)
+        {
             this.dimensions = new Dimensions("/html/body/ul/text()");
-            this.dimensions.LoadFromDocument(document);
+            this.dimensions.LoadFromDocument(doc);
             this.variables = new Variables("/html/body/ul/ul/text()");
-            this.variables.LoadFromDocument(document);
+            this.variables.LoadFromDocument(doc);
         }
     }
 }

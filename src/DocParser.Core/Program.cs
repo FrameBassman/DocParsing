@@ -32,6 +32,8 @@ namespace DocParser.Core
             HtmlDocument htmlDocument = new HtmlDocument();
             htmlDocument.Load(files.First());
 
+            Document document = new Document(new FileInfo(files.First()));
+
             this.VerifyFile(htmlDocument);
         }
 
