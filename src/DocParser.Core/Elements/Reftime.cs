@@ -5,26 +5,26 @@ namespace DocParser.Core.Elements
 {
     public class Reftime : BaseElement
     {
-        private BaseElement Units;
+        private readonly BaseElement LongName;
 
-        private BaseElement StandartName;
+        private readonly BaseElement StandartName;
 
-        private BaseElement LongName;
+        private readonly BaseElement Units;
 
         public Reftime(string xpath) : base(xpath)
         {
-            this.Units = new BaseElement("/html/body/ul/ul/li[9]");
-            this.StandartName = new BaseElement("/html/body/ul/ul/li[10]");
-            this.LongName = new BaseElement("/html/body/ul/ul/li[11]");
+            Units = new BaseElement("/html/body/ul/ul/li[9]");
+            StandartName = new BaseElement("/html/body/ul/ul/li[10]");
+            LongName = new BaseElement("/html/body/ul/ul/li[11]");
         }
 
         public override void LoadFromDocument(HtmlDocument htmlDocument)
         {
             base.LoadFromDocument(htmlDocument);
 
-            this.Units.LoadFromDocument(htmlDocument);
-            this.StandartName.LoadFromDocument(htmlDocument);
-            this.LongName.LoadFromDocument(htmlDocument);
+            Units.LoadFromDocument(htmlDocument);
+            StandartName.LoadFromDocument(htmlDocument);
+            LongName.LoadFromDocument(htmlDocument);
         }
     }
 }

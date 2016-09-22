@@ -1,35 +1,34 @@
-﻿using System.Collections.Generic;
-using DocParser.Core.Service;
+﻿using DocParser.Core.Service;
 using HtmlAgilityPack;
 
 namespace DocParser.Core.Elements
 {
-    class RotatedLatLonProjection : BaseElement
+    internal class RotatedLatLonProjection : BaseElement
     {
-        private BaseElement GridMappingName;
+        private readonly BaseElement GridMappingName;
 
-        private BaseElement GridSouthPoleLatitude;
+        private readonly BaseElement GridSouthPoleAngle;
 
-        private BaseElement GridSouthPoleLongitude;
+        private readonly BaseElement GridSouthPoleLatitude;
 
-        private BaseElement GridSouthPoleAngle;
+        private readonly BaseElement GridSouthPoleLongitude;
 
         public RotatedLatLonProjection(string xpath) : base(xpath)
         {
-            this.GridMappingName = new BaseElement("/html/body/ul/ul/li[1]");
-            this.GridSouthPoleLatitude = new BaseElement("/html/body/ul/ul/li[2]");
-            this.GridSouthPoleLongitude = new BaseElement("/html/body/ul/ul/li[3]");
-            this.GridSouthPoleAngle = new BaseElement("/html/body/ul/ul/li[4]");
+            GridMappingName = new BaseElement("/html/body/ul/ul/li[1]");
+            GridSouthPoleLatitude = new BaseElement("/html/body/ul/ul/li[2]");
+            GridSouthPoleLongitude = new BaseElement("/html/body/ul/ul/li[3]");
+            GridSouthPoleAngle = new BaseElement("/html/body/ul/ul/li[4]");
         }
 
         public override void LoadFromDocument(HtmlDocument htmlDocument)
         {
             base.LoadFromDocument(htmlDocument);
 
-            this.GridMappingName.LoadFromDocument(htmlDocument);
-            this.GridSouthPoleLatitude.LoadFromDocument(htmlDocument);
-            this.GridSouthPoleLongitude.LoadFromDocument(htmlDocument);
-            this.GridSouthPoleAngle.LoadFromDocument(htmlDocument);
+            GridMappingName.LoadFromDocument(htmlDocument);
+            GridSouthPoleLatitude.LoadFromDocument(htmlDocument);
+            GridSouthPoleLongitude.LoadFromDocument(htmlDocument);
+            GridSouthPoleAngle.LoadFromDocument(htmlDocument);
         }
     }
 }

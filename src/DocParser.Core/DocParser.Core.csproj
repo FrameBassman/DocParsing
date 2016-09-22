@@ -68,6 +68,7 @@
     <Compile Include="Service\CustomPair.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service\TimeElement.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="..\DocParser.Decoder\App.config">

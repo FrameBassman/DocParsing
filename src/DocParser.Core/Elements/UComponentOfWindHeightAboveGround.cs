@@ -1,76 +1,88 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using DocParser.Core.Service;
+﻿using DocParser.Core.Service;
 using HtmlAgilityPack;
 
 namespace DocParser.Core.Elements
 {
     public class UComponentOfWindHeightAboveGround : BaseElement
     {
-        private BaseElement LongName;
+        private readonly BaseElement Coordinates;
 
-        private BaseElement Units;
+        private readonly BaseElement Description;
 
-        private BaseElement MissingValue;
+        private readonly BaseElement Grib1Center;
 
-        private BaseElement Description;
+        private readonly BaseElement Grib1LevelDesc;
 
-        private BaseElement GridMapping;
+        private readonly BaseElement Grib1LevelType;
 
-        private BaseElement Coordinates;
+        private readonly BaseElement Grib1Parameter;
 
-        private BaseElement GribVariableId;
+        private readonly BaseElement Grib1Subcenter;
 
-        private BaseElement Grib1Center;
+        private readonly BaseElement Grib1TableVersion;
 
-        private BaseElement Grib1Subcenter;
+        private readonly BaseElement GribVariableId;
 
-        private BaseElement Grib1TableVersion;
+        private readonly BaseElement GridMapping;
 
-        private BaseElement Grib1Parameter;
+        private readonly BaseElement LongName;
 
-        private BaseElement Grib1LevelType;
+        private readonly BaseElement MissingValue;
 
-        private BaseElement Grib1LevelDesc;
+        private readonly BaseElement Units;
 
 
         public UComponentOfWindHeightAboveGround(string xpath) : base(xpath)
         {
-            this.LongName = new BaseElement("/html/body/ul/ul/li[39]");
-            this.Units = new BaseElement("/html/body/ul/ul/li[40]");
-            this.MissingValue = new BaseElement("/html/body/ul/ul/li[41]");
-            this.Description = new BaseElement("/html/body/ul/ul/li[42]");
-            this.GridMapping = new BaseElement("/html/body/ul/ul/li[43]");
-            this.Coordinates = new BaseElement("/html/body/ul/ul/li[44]");
-            this.GribVariableId = new BaseElement("/html/body/ul/ul/li[45]");
-            this.Grib1Center = new BaseElement("/html/body/ul/ul/li[46]");
-            this.Grib1Subcenter = new BaseElement("/html/body/ul/ul/li[47]");
-            this.Grib1TableVersion = new BaseElement("/html/body/ul/ul/li[48]");
-            this.Grib1Parameter = new BaseElement("/html/body/ul/ul/li[49]");
-            this.Grib1LevelType = new BaseElement("/html/body/ul/ul/li[50]");
-            this.Grib1LevelDesc = new BaseElement("/html/body/ul/ul/li[51]");
+            LongName = new BaseElement("/html/body/ul/ul/li[39]");
+            Units = new BaseElement("/html/body/ul/ul/li[40]");
+            MissingValue = new BaseElement("/html/body/ul/ul/li[41]");
+            Description = new BaseElement("/html/body/ul/ul/li[42]");
+            GridMapping = new BaseElement("/html/body/ul/ul/li[43]");
+            Coordinates = new BaseElement("/html/body/ul/ul/li[44]");
+            GribVariableId = new BaseElement("/html/body/ul/ul/li[45]");
+            Grib1Center = new BaseElement("/html/body/ul/ul/li[46]");
+            Grib1Subcenter = new BaseElement("/html/body/ul/ul/li[47]");
+            Grib1TableVersion = new BaseElement("/html/body/ul/ul/li[48]");
+            Grib1Parameter = new BaseElement("/html/body/ul/ul/li[49]");
+            Grib1LevelType = new BaseElement("/html/body/ul/ul/li[50]");
+            Grib1LevelDesc = new BaseElement("/html/body/ul/ul/li[51]");
         }
 
         public override void LoadFromDocument(HtmlDocument htmlDocument)
         {
             base.LoadFromDocument(htmlDocument);
 
-            this.LongName.LoadFromDocument(htmlDocument);
-            this.Units.LoadFromDocument(htmlDocument);
-            this.MissingValue.LoadFromDocument(htmlDocument);
-            this.Description.LoadFromDocument(htmlDocument);
-            this.GridMapping.LoadFromDocument(htmlDocument);
-            this.Coordinates.LoadFromDocument(htmlDocument);
-            this.GribVariableId.LoadFromDocument(htmlDocument);
-            this.Grib1Center.LoadFromDocument(htmlDocument);
-            this.Grib1Subcenter.LoadFromDocument(htmlDocument);
-            this.Grib1TableVersion.LoadFromDocument(htmlDocument);
-            this.Grib1Parameter.LoadFromDocument(htmlDocument);
-            this.Grib1LevelType.LoadFromDocument(htmlDocument);
-            this.Grib1LevelDesc.LoadFromDocument(htmlDocument);
+            LongName.LoadFromDocument(htmlDocument);
+            Units.LoadFromDocument(htmlDocument);
+            MissingValue.LoadFromDocument(htmlDocument);
+            Description.LoadFromDocument(htmlDocument);
+            GridMapping.LoadFromDocument(htmlDocument);
+            Coordinates.LoadFromDocument(htmlDocument);
+            GribVariableId.LoadFromDocument(htmlDocument);
+            Grib1Center.LoadFromDocument(htmlDocument);
+            Grib1Subcenter.LoadFromDocument(htmlDocument);
+            Grib1TableVersion.LoadFromDocument(htmlDocument);
+            Grib1Parameter.LoadFromDocument(htmlDocument);
+            Grib1LevelType.LoadFromDocument(htmlDocument);
+            Grib1LevelDesc.LoadFromDocument(htmlDocument);
+        }
+
+        public override bool Validate()
+        {
+            return LongName.Validate()
+                   && Units.Validate()
+                   && MissingValue.Validate()
+                   && Description.Validate()
+                   && GridMapping.Validate()
+                   && Coordinates.Validate()
+                   && GribVariableId.Validate()
+                   && Grib1Center.Validate()
+                   && Grib1Subcenter.Validate()
+                   && Grib1TableVersion.Validate()
+                   && Grib1Parameter.Validate()
+                   && Grib1LevelType.Validate()
+                   && Grib1LevelDesc.Validate();
         }
     }
 }

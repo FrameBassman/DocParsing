@@ -1,19 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
-using System.Text.RegularExpressions;
-using DocParser.Core.Service;
+using DocParser.Core.Elements;
+using HtmlAgilityPack;
 
 namespace DocParser.Core
 {
-    using DocParser.Core.Elements;
-
-    using HtmlAgilityPack;
-
     public class Document
     {
-        private DateTime From;
+        private Dimensions dimensions;
+        private readonly DateTime From;
 
         public string Name;
 
@@ -23,20 +19,18 @@ namespace DocParser.Core
 
         private Variables variables;
 
-        private Dimensions dimensions;
-
         public Document(FileInfo fileInfo)
         {
-            HtmlDocument document = new HtmlDocument();
+            var document = new HtmlDocument();
             document.Load(fileInfo.FullName);
-            this.LoadFromDocument(document);
+            LoadFromDocument(document);
 
             Path = fileInfo.FullName;
             string[] strings;
             string[] timeStrings;
             try
             {
-                strings = fileInfo.Name.Split('_');
+                strings = System.IO.Path.GetFileNameWithoutExtension(fileInfo.Name).Split('_');
                 timeStrings = strings[2].Split('+');
             }
             catch (IndexOutOfRangeException exception)
@@ -53,12 +47,22 @@ namespace DocParser.Core
             Name = fileInfo.Name;
         }
 
+        public bool Validate()
+        {
+            return variables.Validate() && ValidateDates();
+        }
+
+        private bool ValidateDates()
+        {
+            return DateTime.Equals(variables.GetTime(), From);
+        }
+
         private void LoadFromDocument(HtmlDocument doc)
         {
-            this.dimensions = new Dimensions("/html/body/ul/text()");
-            this.dimensions.LoadFromDocument(doc);
-            this.variables = new Variables("/html/body/ul/ul/text()");
-            this.variables.LoadFromDocument(doc);
+            dimensions = new Dimensions("/html/body/ul/text()");
+            dimensions.LoadFromDocument(doc);
+            variables = new Variables("/html/body/ul/ul/text()");
+            variables.LoadFromDocument(doc);
         }
     }
 }

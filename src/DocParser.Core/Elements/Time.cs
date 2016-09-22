@@ -1,35 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using DocParser.Core.Service;
 using HtmlAgilityPack;
 
 namespace DocParser.Core.Elements
 {
-    class Time : BaseElement
+    internal class Time : BaseElement
     {
-        private BaseElement Units;
+        private readonly BaseElement LongName;
 
-        private BaseElement StandartName;
+        private readonly BaseElement StandartName;
 
-        private BaseElement LongName;
+        private readonly TimeElement Units;
 
         public Time(string xpath) : base(xpath)
         {
-            this.Units = new BaseElement("/html/body/ul/ul/li[13]");
-            this.StandartName = new BaseElement("/html/body/ul/ul/li[14]");
-            this.LongName = new BaseElement("/html/body/ul/ul/li[15]");
+            Units = new TimeElement("/html/body/ul/ul/li[13]");
+            StandartName = new BaseElement("/html/body/ul/ul/li[14]");
+            LongName = new BaseElement("/html/body/ul/ul/li[15]");
         }
 
         public override void LoadFromDocument(HtmlDocument htmlDocument)
         {
             base.LoadFromDocument(htmlDocument);
 
-            this.Units.LoadFromDocument(htmlDocument);
-            this.StandartName.LoadFromDocument(htmlDocument);
-            this.LongName.LoadFromDocument(htmlDocument);
+            Units.LoadFromDocument(htmlDocument);
+            StandartName.LoadFromDocument(htmlDocument);
+            LongName.LoadFromDocument(htmlDocument);
+        }
+
+
+        public DateTime GetTimeFromUnits()
+        {
+            return Units.GetTime();
         }
     }
 }
