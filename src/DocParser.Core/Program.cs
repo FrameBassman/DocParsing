@@ -9,12 +9,10 @@ using HtmlAgilityPack;
 
 namespace DocParser.Core
 {
+    using System.Collections.Generic;
+
     internal class Program
     {
-        private readonly string Reftime = @"/html/body/ul/ul/li[9]";
-        private string ResourceName = @"/html/head/meta[3]";
-
-
         private static void Main(string[] args)
         {
             var p = new Program();
@@ -24,30 +22,86 @@ namespace DocParser.Core
         private void Run()
         {
             var pathToFiles = ConfigurationManager.AppSettings["PathToFiles"];
-            var files = Directory.GetFiles(@"D:\Projects\git-docparsing\src\DocParser.Decoder\bin\Debug\OutputFiles");
+            //var files = Directory.GetFiles(@"D:\Projects\git-docparsing\src\DocParser.Decoder\bin\Debug\OutputFiles");
+            var files = Directory.GetFiles(@"D:\Project\git-docparsing\src\DocParser.Decoder\bin\Debug\OutputFiles");
 
-            var doc = new Document(new FileInfo(files.First()));
-            doc.Validate();
+            //var doc = new Document(new FileInfo(files.First()));
+            //doc.Validate();
 
-            //List<Document> list = new List<Document>();
-            //foreach (string file in files)
-            //{
-            //    list.Add(new Document(new FileInfo(file)));
-            //}
+            List<Document> list = new List<Document>();
+            foreach (string file in files)
+            {
+                list.Add(new Document(new FileInfo(file)));
+            }
+
+            var r = this.ValidateDocumentNames(list);
 
             //this.VerifyFile(htmlDocument);
         }
 
-        private void VerifyFile(HtmlDocument file)
+
+
+        private bool ValidateDocumentNames(List<Document> docs)
         {
-            var customPair = new CustomPair(file.DocumentNode.SelectNodes(Reftime)[0].InnerText);
-            var dtTime = DateTime.ParseExact("2014-06-25T00:00:00Z", "yyyy-MM-ddThh:mm:ssZ", new DateTimeFormatInfo());
+            bool result = true;
+            DateTime minFrom = DateTime.MaxValue;
+            DateTime maxFrom = DateTime.MinValue;
+            TimeSpan minTimeliness = TimeSpan.MinValue;
+            TimeSpan maxTimeliness = TimeSpan.MaxValue;
+            TimeSpan currentFromStep = docs[1].From - docs[0].From;
+            TimeSpan previousFromStep = docs[1].From - docs[0].From;
+            TimeSpan currentTimelinessStep = docs[1].Timeliness - docs[0].Timeliness;
+            TimeSpan previousTimelinessStep = docs[1].Timeliness - docs[0].Timeliness;
 
-            var rotatedLatLonProjection = new RotatedLatLonProjection("/html/body/ul/ul/p[1]");
-            rotatedLatLonProjection.LoadFromDocument(file);
+            for (int i = 0; i < docs.Count; i++)
+            {
+                if (minFrom > docs[i].From)
+                {
+                    minFrom = docs[i].From;
+                }
 
-            var reftime = new Reftime("/html/body/ul/ul/p[4]");
-            reftime.LoadFromDocument(file);
+                if (maxFrom < docs[i].From)
+                {
+                    maxFrom = docs[i].From;
+                }
+
+                if (minTimeliness > docs[i].Timeliness)
+                {
+                    minTimeliness = docs[i].Timeliness;
+                }
+
+                if (maxTimeliness < docs[i].Timeliness)
+                {
+                    maxTimeliness = docs[i].Timeliness;
+                }
+
+                if (!(i + 1 > docs.Count))
+                {
+                    currentFromStep = docs[i + 1].From - docs[i].From;
+                    currentTimelinessStep = docs[i + 1].Timeliness - docs[i].Timeliness;
+
+                    if (currentFromStep != previousFromStep)
+                    {
+                        Console.WriteLine("Document list is invalid: missed file between {0} and {1}", docs[i].Name, docs[i + 1].Name);
+                        i++;
+                        result = false;
+                        continue;
+                    }
+
+                    if (currentTimelinessStep != previousTimelinessStep)
+                    {
+                        Console.WriteLine("Document list is invalid: timeliness step is incorrect between the following files: {0} and {1}", docs[i].Name, docs[i + 1].Name);
+                        i++;
+                        result = false;
+                        continue;
+                    }
+
+                    previousFromStep = currentFromStep;
+                    previousTimelinessStep = currentTimelinessStep;
+                }
+            }
+
+            return result;
         }
     }
 }

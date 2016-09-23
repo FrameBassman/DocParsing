@@ -9,13 +9,13 @@ namespace DocParser.Core
     public class Document
     {
         private Dimensions dimensions;
-        private readonly DateTime From;
+        public readonly DateTime From;
 
         public string Name;
 
         public string Path;
 
-        private TimeSpan Timeliness;
+        public TimeSpan Timeliness;
 
         private Variables variables;
 

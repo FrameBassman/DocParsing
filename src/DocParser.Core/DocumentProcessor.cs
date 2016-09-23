@@ -2,6 +2,8 @@
 
 namespace DocParser.Core
 {
+    using System.Linq;
+
     public class DocumentProcessor
     {
         private List<Document> docsList;
