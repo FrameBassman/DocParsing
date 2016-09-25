@@ -22,8 +22,11 @@ namespace DocParser.Core
 
             foreach (string file in files)
             {
-
-                list.Add(new Document(new FileInfo(file)));
+                var candidate = Document.Parse(new FileInfo(file));
+                if (candidate.IsValid)
+                {
+                    list.Add(candidate);
+                }
             }
 
             string r = documentProcessor.ValidateDocumentNames(list);

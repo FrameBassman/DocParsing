@@ -58,8 +58,7 @@ namespace DocParser.Decoder
             var currentPath = Directory.GetCurrentDirectory();
             var jarPath = Path.Combine(currentPath, @"..\..\..\3dparty\grib-parser\grib.jar");
             var pathToJavaBin = ConfigurationManager.AppSettings["PathToJavaBin"];
-
-            var outputDirectory = Path.Combine(currentPath, "OutputFiles");
+            var outputDirectory = ConfigurationManager.AppSettings["PathToOutputFiles"];
             Directory.CreateDirectory(outputDirectory);
 
             var inputFile = Path.Combine(fileInfo.FullName);
