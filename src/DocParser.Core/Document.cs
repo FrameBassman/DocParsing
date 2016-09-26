@@ -12,7 +12,7 @@
     {
         public readonly DateTime From;
 
-        public bool IsValid;
+        public bool NameIsValid;
 
         public string Name;
 
@@ -31,7 +31,7 @@
             string path,
             Dimensions dimensions,
             Variables variables,
-            bool isValid)
+            bool nameIsValid)
         {
             this.From = from;
             this.Timeliness = timeliness;
@@ -39,7 +39,7 @@
             this.Path = path;
             this.Dimensions = dimensions;
             this.Variables = variables;
-            this.IsValid = isValid;
+            this.NameIsValid = nameIsValid;
         }
 
         public int CompareTo(object document)
@@ -74,7 +74,7 @@
             var vars = new Variables("/html/body/ul/ul/text()");
             var path = fileInfo.FullName;
             var name = fileInfo.Name;
-            bool isValid = true;
+            bool nameIsValid = true;
 
             document.Load(fileInfo.FullName);
             dims.LoadFromDocument(document);
@@ -93,10 +93,10 @@
             }
             catch (Exception e)
             {
-                isValid = false;
+                nameIsValid = false;
             }
 
-            return new Document(from, timeliness, name, path, dims, vars, isValid);
+            return new Document(from, timeliness, name, path, dims, vars, nameIsValid);
         }
 
         public string Validate()
